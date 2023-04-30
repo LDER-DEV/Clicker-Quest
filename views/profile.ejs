@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <title>clicker quest</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<div class="container">
+
+  <div class="page-header text-center">
+      <h1><span class="fa fa-fire"></span> Welcome brave traveler!<span class="fa fa-fire"></h1>
+      <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+  </div>
+
+  <div class="row">
+
+      <!-- LOCAL INFORMATION -->
+      <div class="col-md-6">
+          <div class="panel panel-default">
+              <div class="panel-heading" id="black"><h3><span class="fa fa-fire"></span> User Account </h3></div>
+              <div class="panel-body" id="black">
+                  <% if (user.local.email) { %>
+                      <p><strong>Email:</strong> <%= user.local.email %></p>
+                      <a href="/unlink/local" class="btn btn-danger">Unlink</a>
+                  <% } else { %>
+                      <a href="/connect/local" class="btn btn-default">Connect Local</a>
+                  <% } %>
+              </div>
+              <ul class="list-group">
+                  <% for (var i = 0; i < clickerQuest.length; i++) {
+                        if (user.local.email === clickerQuest[i].name) { %>
+                      <li class="list-group-item" id="black">
+                          <span class="badge">EXP: <%= clickerQuest[i].exp %></span>
+                          <span class="badge">HP: <%= clickerQuest[i].HP %></span>
+                         <span>Character Name:</span> <%= clickerQuest[i].hero %>
+                      </li>
+                  <%   }
+                     } %>
+              </ul>
+          </div>
+      </div>
+        <div class="col-sm-6">
+          <h3>Start your Journey</h3>
+          <ul class="clickerQuest">
+            <% for (var i = 0; i < clickerQuest.length; i++) {
+                  if (user.local.email === clickerQuest[i].name) { %>
+                <li class="message">
+                  <span class="hidden"><%= clickerQuest[i].name %></span>
+                  <span class="currentHero"><%= clickerQuest[i].hero %></span>
+                  <span class="hidden"><%= clickerQuest[i].exp %></span>
+                  <span class="hidden"><%= clickerQuest[i].HP %></span>
+                  <span><a href="" class ='quest'>|Go-on-a-Quest|</a></span>
+                  <span><a href="" class ='rest'>|Rest at the Inn|</a></span>
+                  <span><a href="" class ='delete'>|End Journey|</a></span>
+                </li>
+            <%   }
+               } %>
+          </ul>
+
+          <h2>Create a new Character</h2>
+
+          <% if (user.local.email) { %>
+            <form action="/clickerQuest" method="POST" class="form">
+              <input type="text" value="<%= user.local.email %>" name="name" class="hidden">
+              <div class="form-group">
+                <label for="hero">Hero Name:</label>
+                <input type="text" class="form-control" id="hero" placeholder="Enter your hero's name" name="hero">
+              </div>
+              <button type="submit" class="btn btn-primary">A hero is born!</button>
+            </form>
+          <% } %>
+
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html>
